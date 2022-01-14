@@ -1,6 +1,6 @@
 function run_iturbo2_simple_experiments(datafile)
 %%  MATLAB script to run some simple experiments of iTURBO2
-%%  to run: run_iturbo2_paper_experiments('data/iTURBO2_input_data.xlsx')
+%%  to run: run_iturbo2_simple_experiments('data/iTURBO2_input_data.xlsx')
 %
 % datafile  :   INPUT FILE WITH REQUIRED DATA
 
