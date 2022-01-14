@@ -1,6 +1,6 @@
 function run_iturbo2_paper_experiments(datafile, test_run)
 %%  MATLAB script to run multiple experiments of iTURBO2 that are included in the paper
-%% to run: run_iturbo2_paper_experiments('data/iTURBO2_input_data.xlsx')
+%% to run: run_iturbo2_paper_experiments('data/iTURBO2_input_data.xlsx', false)
 %
 % datafile  :   INPUT FILE WITH REQUIRED DATA
 % test_run  :   true = fewer simulations -> to run faster
