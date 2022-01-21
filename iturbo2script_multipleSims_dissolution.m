@@ -35,7 +35,6 @@ exps = noexps;          % number of different experiments
 
 %%
 for i = 1:exps
-    i
     [oriabu(i,:,:),bioabu(i,:,:),oriiso(i,:,:),bioiso(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl1,numb, TM);
     [oriabu2(i,:,:),bioabu2(i,:,:),oriiso2(i,:,:),bioiso2(i,:,:)] = iturbo2_plus_TM(abu50,iso,mxl1,numb, TM);
     [oriabu3(i,:,:),bioabu3(i,:,:),oriiso3(i,:,:),bioiso3(i,:,:)] = iturbo2_plus_TM(abu90,iso,mxl1,numb, TM);
@@ -108,6 +107,11 @@ xlabel('Core depth (cm) ');
 ylabel('\delta^{18}O');
 
 printfilename = [expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps'];
+
+% check if output directory exists -- if not create it:
+if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
+             
+    
 save(['output/mat/',printfilename,'.mat'],'printfilename', 'lngth','bioiso','bioiso2','bioiso3','bioiso4', 'oriiso', 'mean_bioiso1_diss0', 'mean_bioiso1_mxl2', 'mean_bioiso1_mxl3', 'mean_bioiso1_diss100','expname', 'exps', 'bioabu','bioabu2','bioabu3','bioabu4', 'oriabu', 'oriabu2', 'oriabu3', 'oriabu4', 'mean_bioabu1_diss0', 'mean_bioabu1_mxl2', 'mean_bioabu1_mxl3', 'mean_bioabu1_diss100')
 print(fig1, '-depsc', ['output/',printfilename]);   % save figure in extra output folder
 

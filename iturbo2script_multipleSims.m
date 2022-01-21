@@ -30,7 +30,6 @@ exps = noexps;     % number of different experiments
 
 %%
 for i = 1:exps
-    i
     [oriabu(i,:,:),bioabu(i,:,:),oriiso(i,:,:),bioiso(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl,numb, TM);
 end
 %%
@@ -75,7 +74,10 @@ titletxt = ['Isotopes of Carriers 1+2, ',mxltext,...
     ' cm Mixed Layer, ',numbtxt,' Carriers'];
 title('Isotope signals')
 
-
+% check if output directory exists -- if not create it:
+if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
+             
+    
 if(plot_results)
     printfilename = [expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_ISO'];
 else

@@ -143,8 +143,8 @@ end
 biopart1 = biopart1(:,1:numb);  % reduce array to number of carriers to be picked/measured
 biopart2 = biopart2(:,1:numb);  % reduce array to number of carriers to be picked/measured
 for i = 1:length(abu)
-    bioiso(i,1) = nanmean(biopart1(i,:));   % calculate bioturbated isotope mean of the numb (50) values
-    bioiso(i,2) = nanmean(biopart2(i,:));   % calculate bioturbated isotope mean of the numb (50) values
+    bioiso(i,1) = mean(biopart1(i,:), 'omitnan');   % calculate bioturbated isotope mean of the numb (50) values
+    bioiso(i,2) = mean(biopart2(i,:), 'omitnan');   % calculate bioturbated isotope mean of the numb (50) values
 end
 % flip abu and iso upside down, otherwise sediment column grows downward
 oriabu = flipud(oriabu);

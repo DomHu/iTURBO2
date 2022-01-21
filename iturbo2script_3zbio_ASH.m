@@ -39,7 +39,6 @@ exps = noexps;          % number of different experiments
 
 %%
 for i = 1:exps
-    i
     [oriabu(i,:,:),bioabu(i,:,:),oriiso(i,:,:),bioiso(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl1,numb, TM);
     [oriabu2(i,:,:),bioabu2(i,:,:),oriiso2(i,:,:),bioiso2(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl2,numb, TM);
     [oriabu3(i,:,:),bioabu3(i,:,:),oriiso3(i,:,:),bioiso3(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl3,numb, TM);
@@ -126,6 +125,11 @@ ylabel('Normalized ash concentration');
 text(0.04, 0.90, txt, 'FontSize', 14, 'Units', 'normalized');
 hold off
 printfilename = ['3zbio_',expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps'];
+
+% check if output directory exists -- if not create it:
+if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
+
+    
 save(['output/mat/',printfilename,'.mat'],'printfilename', 'lngth','bioiso','bioiso2','bioiso3', 'oriiso', 'mean_bioiso1_mxl1', 'mean_bioiso1_mxl2', 'mean_bioiso1_mxl3','expname', 'exps', 'bioabu','bioabu2','bioabu3', 'oriabu', 'oriabu2', 'oriabu3', 'mean_bioabu1_mxl1', 'mean_bioabu1_mxl2', 'mean_bioabu1_mxl3')
 print('-depsc', ['output/',printfilename]);   % save figure in extra output folder
 

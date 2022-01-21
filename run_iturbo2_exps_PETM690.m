@@ -120,6 +120,10 @@ plot(100*oriabu_flipud2/10000,age_flipud, '--','Color', dblue,'LineWidth',2)
 set(gca,'YDir','Reverse','XGrid','On','YGrid','On','Box','On', 'XLim',[0,105.0], 'YLim',[170.4,171.0]);%,'YTick',[1.0 1.5 2.0 2.5 3.0])
 xlabel('Rel. pop. size (%)');
 
+% check if output directory exists -- if not create it:
+if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
+             
+    
 if(load_plot_existing_result)
     print(fig01,'-depsc', ['output/Combined_',outfilename , '_as_paper_n=' , num2str(carriers) , 'carriers']);   % save figure in extra output folder
 else

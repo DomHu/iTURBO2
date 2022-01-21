@@ -36,7 +36,6 @@ exps = noexps;          % number of different experiments
 
 %% run TURBO2 with three different bioturbation depths
 for i = 1:exps
-    i
     [oriabu(i,:,:),bioabu(i,:,:),oriiso(i,:,:),bioiso(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl1,numb, TM);
     [oriabu2(i,:,:),bioabu2(i,:,:),oriiso2(i,:,:),bioiso2(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl2,numb, TM);
     [oriabu3(i,:,:),bioabu3(i,:,:),oriiso3(i,:,:),bioiso3(i,:,:)] = iturbo2_plus_TM(abu,iso,mxl3,numb, TM);
@@ -128,10 +127,14 @@ if(settings.plot_iso_spec1)
     %legend('Original Isotopes','carriers 1','carriers 2')
     
     if(~TM)
-        printfilename = ['3zbio_',expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_homogen'];
+        printfilename = [expname,'_3zbio_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_homogen'];
     else % use TM
-        printfilename = ['3zbio_',expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_TM'];
+        printfilename = [expname,'_3zbio_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_TM'];
     end
+    
+    % check if output directory exists -- if not create it:
+   	if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
+             
     save(['output/mat/',printfilename,'.mat'],'printfilename', 'lngth','bioiso','bioiso2','bioiso3', 'oriiso', 'mean_bioiso1_mxl1', 'mean_bioiso1_mxl2', 'mean_bioiso1_mxl3','expname', 'exps', 'bioabu','bioabu2','bioabu3', 'oriabu', 'oriabu2', 'oriabu3', 'mean_bioabu1_mxl1', 'mean_bioabu1_mxl2', 'mean_bioabu1_mxl3')
     print('-depsc', ['output/',printfilename]);   % save figure in extra output folder
 end

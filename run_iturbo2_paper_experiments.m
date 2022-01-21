@@ -18,6 +18,23 @@ function run_iturbo2_paper_experiments(datafile, test_run)
 %   here 3 different bioturbation depths are compared (i.e. mxl cm (as specified in datafile) 10 cm and 20 cm))
 %   or for the dissolution experiment: three different dissolution scenrios are simulated
 
+
+% 
+tmp_mutlab = version('-release');
+str_mutlab = tmp_mutlab(1:4);
+par_mutlab = str2num(str_mutlab);
+
+if (par_mutlab > 2019)
+    disp([' ']);
+    disp(['!!!!!!!!!!!!!!!!!!!!!']);
+    disp(['>>> Warning: The code might not work with your matlab version ...']);
+    disp(['>>> The code has been created with version 2019b  ...']);
+    disp(['!!!!!!!!!!!!!!!!!!!!!']);
+    disp([' ']);
+
+end    
+
+
 % add path to plotting utils
 addpath('./utils');
 
@@ -31,6 +48,18 @@ settings.plot_ash_expl = false;                 % plot ash example
 
 settings.sprectral_ana = false;                 % signal needs to be flipped for my spectral analysis
 
+disp([' ']);
+if test_run
+    disp(['>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>']);
+    disp(['>>> Running all experiments of the paper but using fewer model simulations ...']);
+    disp(['>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>']);
+    disp([' ']);
+else
+    disp(['>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>']);
+    disp(['>>> Running all experiments of the paper ...']);
+    disp(['>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>']);
+    disp([' ']);
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,6 +68,10 @@ settings.sprectral_ana = false;                 % signal needs to be flipped for
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+disp([' ']);
+disp(['>>> Running "The six idealized shapes" ...']);
+
+
 carriers = 10000;     	% to be measured    [10000]
 Exps = 100;             % Experiments to run; each one and the mean is plotted  [100]
 
@@ -58,32 +91,33 @@ TM = [false, true];     % simulate homogeneous mixing and using a transition mat
 
 for i=1:length(TM)
     data=xlsread(datafile,'shapes','C4:F263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'point_event',TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_point_event',TM(i), settings)
     close all
     
     data=xlsread(datafile,'shapes','H4:K263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'multiple_points',TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_multiple_points',TM(i), settings)
 	close all
 
     data=xlsread(datafile,'shapes','M4:P263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'step_sequence',TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_step_sequence',TM(i), settings)
 	close all
     
     data=xlsread(datafile,'shapes','R4:U263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'gradual_change', TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_gradual_change', TM(i), settings)
 	close all
     
     data=xlsread(datafile,'shapes','W4:Z263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'stepwise_down', TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_stepwise_down', TM(i), settings)
 	close all
     
     data=xlsread(datafile,'shapes','AB4:AE263');
-    iturbo2script_multipleSims_3zbio(data, carriers, Exps, '40kyrs',TM(i), settings)
+    iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_IdealizedShapes_40kyrs',TM(i), settings)
 	close all
 end
 
 settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
+disp(['>>> Done with "The six idealized shapes" ...']);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,6 +127,8 @@ settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Artificial signal with 20, 40 and 100 kyr periode - 1.1 Mio years
+disp([' ']);
+disp(['>>> Running "Artificial sinusoidal isotopic change" ...']);
 
 carriers = 10000;     	% to be measured [10000]
 Exps = 100;              % Experiments to run; each one and the mean is plotted [100]
@@ -114,11 +150,12 @@ settings.plot_iso_spec1 = true;              % plot isotopes for species 1 only
 TM = false;
 
 data=xlsread(datafile,'Artificial_SinusSignal','C4:F1103');
-iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'ArtificialSinusSignal',TM, settings)
+iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_ArtificialSinusSignal',TM, settings)
 close all
 
 settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
+disp(['>>> Done with "Artificial sinusoidal isotopic change" ...']);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,6 +164,10 @@ settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp([' ']);
+disp(['>>> Running "Observed ash profiles" ...']);
+
 carriers = 10000;     	% to be measured  [10000]
 Exps = 100;        	% Experiments to run; each one and the mean is plotted [100]
 %% ASH experiment run with input from iTURBO2_input_ash_experiment.xlsx
@@ -148,6 +189,8 @@ Observation = 2;
 iturbo2script_3zbio_ASH(data, carriers, Exps, 'ASH_experiment_2.0cmkyr', TM, Observation)
 close all
 
+disp(['>>> Done with "Observed ash profiles" ...']);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -162,6 +205,10 @@ close all
 
 % As the core record is very long it will take a pretty long time to measure all 10000 particles
 % consider using fewer particles (e.g. carriers here, and also ABU in the excel file)
+
+disp([' ']);
+disp(['>>> Running "Isotopic change following Laskar solution" ...']);
+
 carriers = 10000;     	% to be measured
 Exps = 10;              % Experiments to run; each one and the mean is plotted
 
@@ -185,11 +232,12 @@ TM = false;
 
 % Get Laskar 4.1 Mio signal flipped - 19.02.2021
 data=xlsread(datafile,'Laskar_solution','C4:F4103');
-iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'La2004_1E1T1P_4100kyrs',TM, settings)
+iturbo2script_multipleSims_3zbio(data, carriers, Exps, 'Fig_Laskar_solution',TM, settings)
 close all
 
 settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
+disp(['>>> Done with "Isotopic change following Laskar solution" ...']);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -199,6 +247,9 @@ settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp([' ']);
+disp(['>>> Running "Dissolution experiments" ...']);
 
 carriers = 1000;     	% to be measured [1000]
 Exps = 100;        	% Experiments to run; each one and the mean is plotted [100]
@@ -242,6 +293,7 @@ data100=xlsread(datafile3,'100perc_diss','O4:R263');
 iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'gradual_change', TM, plot_min)
 close all
 
+disp(['>>> Done with "Dissolution experiments" ...']);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -250,6 +302,9 @@ close all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp([' ']);
+disp(['>>> Running "Isotope & Abu-change for cold and warm species" ...']);
 
 carriers = 20;     	% to be measured [20]
 Exps = 100;        	% Experiments to run; each one and the mean is plotted [100]
@@ -267,6 +322,7 @@ data=xlsread(datafile,'iso_abu_change_2Species','C4:F263');
 iturbo2script_multipleSims(data, carriers, Exps, 'Multiple-step_with_abu-change_1000species', TM)
 close all
 
+disp(['>>> Done with "Isotope & Abu-change for cold and warm species" ...']);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -276,6 +332,8 @@ close all
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+disp([' ']);
+disp(['>>> Running "PETM OPD 690 experiments" ...']);
 
 plot_paper_results = true;
 numb_carriers = 4;
@@ -294,4 +352,14 @@ close all
 plot_paper_results = false;
 numb_carriers = 20;
 run_iturbo2_exps_PETM690('data/iTURBO2_input_PETM_690_Exp.xlsx' , 'PETM_results', plot_paper_results, numb_carriers)
+
+disp(['>>> Done with "PETM OPD 690 experiments" ...']);
+
+% final messages
+disp([' ']);
+disp(['------------------------------------------------------------']);
+disp(['   Congratulations! All experiments are done!  ']);
+disp(['   The .eps files are saved on the directory output']);
+disp(['------------------------------------------------------------']);
+disp([' ']);
 

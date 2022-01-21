@@ -26,7 +26,6 @@ exps = noexps;          % number of different experiments
 
 %%
 for i = 1:exps
-    i
     [oriabu(i,:,:),bioabu(i,:,:),oriiso(i,:,:),bioiso(i,:,:),biopart1(i,:,:)] = iturbo2_PETM690(abu,iso,mxl1,numb);
 end
 % normalize bioabu:
