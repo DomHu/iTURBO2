@@ -183,10 +183,10 @@ data=xlsread(datafile2,'ash_data','C4:F63');
 TM = false;
 
 Observation = 1;
-iturbo2script_3zbio_ASH(data, carriers, Exps, 'ASH_experiment_0.5cmkyr', TM, Observation)
+iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_0.5cmkyr', TM, Observation)
 close all
 Observation = 2;
-iturbo2script_3zbio_ASH(data, carriers, Exps, 'ASH_experiment_2.0cmkyr', TM, Observation)
+iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_2.0cmkyr', TM, Observation)
 close all
 
 disp(['>>> Done with "Observed ash profiles" ...']);
@@ -272,7 +272,7 @@ data=xlsread(datafile3,'nochange','C4:F263');
 data50=xlsread(datafile3,'50perc_diss','C4:F263');
 data90=xlsread(datafile3,'90perc_diss','C4:F263');
 data100=xlsread(datafile3,'100perc_diss','C4:F263');
-iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'pointevent1', TM, plot_min)
+iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'Dis_pointevent', TM, plot_min)
 close all
 
 % %%step sequence
@@ -281,7 +281,7 @@ data=xlsread(datafile3,'nochange','H4:K263');
 data50=xlsread(datafile3,'50perc_diss','H4:K263');
 data90=xlsread(datafile3,'90perc_diss','H4:K263');
 data100=xlsread(datafile3,'100perc_diss','H4:K263');
-iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'step_sequence', TM, plot_min)
+iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'Dis_step_sequence', TM, plot_min)
 close all
 
 % %% gradual change
@@ -290,7 +290,7 @@ data=xlsread(datafile3,'nochange','O4:R263');
 data50=xlsread(datafile3,'50perc_diss','O4:R263');
 data90=xlsread(datafile3,'90perc_diss','O4:R263');
 data100=xlsread(datafile3,'100perc_diss','O4:R263');
-iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'gradual_change', TM, plot_min)
+iturbo2script_multipleSims_dissolution(data, data50, data90, data100, carriers, Exps, 'Dis_gradual_change', TM, plot_min)
 close all
 
 disp(['>>> Done with "Dissolution experiments" ...']);
@@ -319,7 +319,7 @@ TM = false;
 
 % % multistep change with 1000 total abundance
 data=xlsread(datafile,'iso_abu_change_2Species','C4:F263');
-iturbo2script_multipleSims(data, carriers, Exps, 'Multiple-step_with_abu-change_1000species', TM)
+iturbo2script_multipleSims(data, carriers, Exps, 'Cold_vs_warm_species', TM)
 close all
 
 disp(['>>> Done with "Isotope & Abu-change for cold and warm species" ...']);
