@@ -81,7 +81,8 @@ zbio10cm_12carriers_Thermo_0.1_and_1.0_percent_IntermedDeepMix.mat	- iTURBO2 res
 ### Description of other folders:
 ################################################
 
-* transmtx:	- The transition matrices generated and used for the local (upward) mixing for bioturbation depths of 5, 10, and 20 cm
+* transmtx:	- The transition matrices generated and used for the local (upward) mixing for bioturbation depths of 5, 7, 9, 10, 11, 13 and 20 cm
+		- New, user-specified transition matrices have to be saved in this folder and need to be read and used by the iTURBO2 model in the file iturbo2_plus_TM.m. 
 * utils:	- MATLAB utility functions for plotting purposes
 * output: 	- Result figures are saved here as .eps files. 
 * output/mat:	- MATLAB .mat files are saved here that record the results of the specific experiments so they can be recreated. 

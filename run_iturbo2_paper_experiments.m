@@ -61,6 +61,7 @@ else
     disp([' ']);
 end
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -175,19 +176,23 @@ datafile2 = 'data/iTURBO2_input_ash_experiment.xlsx';
 
 if test_run
     carriers = 100;     	% to be measured    [10000]
-    Exps = 4;             % Experiments to run; each one and the mean is plotted  [100]
+    Exps = 100;             % Experiments to run; each one and the mean is plotted  [100]
     datafile2 = 'data/test_run/iTURBO2_input_ash_experiment_test_run.xlsx';
 end
 
 data=xlsread(datafile2,'ash_data','C4:F63');
-TM = false;
 
-Observation = 1;
-iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_0.5cmkyr', TM, Observation)
-close all
-Observation = 2;
-iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_2.0cmkyr', TM, Observation)
-close all
+TM = [false, true];     % simulate homogeneous mixing and using a transition matrix
+
+for i=1:length(TM)
+
+    Observation = 1;
+    iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_0.5cmkyr', TM(i), Observation)
+    close all
+    Observation = 2;
+    iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_2.0cmkyr', TM(i), Observation)
+    close all
+end
 
 disp(['>>> Done with "Observed ash profiles" ...']);
 
@@ -217,8 +222,6 @@ if test_run
     carriers = 10;     	% to be measured    [10000]
     Exps = 1;             % Experiments to run; each one and the mean is plotted  [100]
 end
-
-settings.plot_iso_spec1 = true;              % plot isotopes for species 1 only
 
 settings.SetXaxis_lim = false;      % Set lim for Xaxis
 settings.Xaxis_lim = 4000;          % value for Xaxis lim
@@ -359,7 +362,7 @@ disp(['>>> Done with "PETM OPD 690 experiments" ...']);
 disp([' ']);
 disp(['------------------------------------------------------------']);
 disp(['   Congratulations! All experiments are done!  ']);
-disp(['   The .eps files are saved on the directory output']);
+disp(['   The .eps files are saved in the directory "output" ']);
 disp(['------------------------------------------------------------']);
 disp([' ']);
 

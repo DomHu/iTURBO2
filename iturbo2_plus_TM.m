@@ -41,17 +41,21 @@ else % USE TRANSITION MATRIX
     
     %    sedrate = 1e-4; % cm/yr
     %    dt = 1./sedrate; % yr
-    dt = abu(1);
+    dt = max(abu);   % was: abu(1);
     dtint = round(dt);
     dx = 1.; % cm
     % read transition matrix
-    if(mxl(1)==5)
-        fileID=fopen('transmtx/trans-equal_local_5cm.txt','r');
-    elseif(mxl(1)==10)
-        fileID=fopen('transmtx/trans-equal_local_10cm.txt','r');
-    elseif(mxl(1)==20)
-        fileID=fopen('transmtx/trans-equal_local_20cm.txt','r');
-    end
+    mxltxt = num2str(mxl(1));
+    mxl_filename = ['transmtx/trans-equal_local_',mxltxt ,'cm.txt'];
+    fileID=fopen(mxl_filename,'r');
+%     % was before:
+%     if(mxl(1)==5)
+%         fileID=fopen('transmtx/trans-equal_local_5cm.txt','r');
+%     elseif(mxl(1)==10)
+%         fileID=fopen('transmtx/trans-equal_local_10cm.txt','r');
+%     elseif(mxl(1)==20)
+%         fileID=fopen('transmtx/trans-equal_local_20cm.txt','r');
+%     end
     sizeA=[mxl(1) mxl(1)];
     formatSpec = '%f';
     A = fscanf(fileID,formatSpec,sizeA);

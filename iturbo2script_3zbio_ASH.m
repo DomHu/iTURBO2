@@ -26,12 +26,18 @@ if(Observation ==1 )     % 0.5 cm kyr-1 rate
     mxl3 = data(:,2).*15;
     Change_rel_depth = 43;  % to align max ash concentration observed with simulated using intermediate zbio
     txt = '0.5 cm kyr^{-1}';
+    if(TM == true)
+        Change_rel_depth = 28;  % to align max ash concentration observed with simulated using intermediate zbio
+    end
 else                    % 2.0 - 2.5 cm kyr-1 rate
     mxl1   = data(:,2).*5;
     mxl2 = data(:,2).*7;
     mxl3 = data(:,2).*9;
     Change_rel_depth = 37;  % to align max ash concentration observed with simulated using intermediate zbio
     txt = '2.0 - 2.5 cm kyr^{-1}';
+    if(TM == true)
+        Change_rel_depth = 31;  % to align max ash concentration observed with simulated using intermediate zbio
+    end    
 end
 
 numb  = nocarriers;     % number of carriers to be measured
@@ -110,11 +116,12 @@ plot(rel_depth,mean_bioabu1_mxl3, '-b','Linewidth',2.0)
 if(Observation == 1 )     % 0.5 cm kyr-1 rate
     plot(data_V29_39(:,1),data_V29_39(:,2),'ko','MarkerFaceColor','k')
     plot(data_V29_40(:,1),data_V29_40(:,2),'k^','MarkerFaceColor','k')
-    hleg=legend('z_{bio}= 0 cm','z_{bio}= 11 cm','z_{bio}= 13 cm','z_{bio}= 15 cm');
+    hleg=legend(['z_{bio}= 0 cm'], ['z_{bio}= ' , mxltext, ' cm'],['z_{bio}= ' , mxltext2,' cm'],['z_{bio}= ', mxltext3,' cm']);
 else % 2 - 2..5cm kyr-1
     plot(data_RC17_126(:,1),data_RC17_126(:,2),'ko','MarkerFaceColor','k')
     plot(data_E48_23(:,1),data_E48_23(:,2),'k^','MarkerFaceColor','k')
-    hleg=legend('z_{bio}= 0 cm','z_{bio}= 5 cm','z_{bio}= 7 cm','z_{bio}= 9 cm');
+    hleg=legend(['z_{bio}= 0 cm'], ['z_{bio}= ' , mxltext, ' cm'],['z_{bio}= ' , mxltext2,' cm'],['z_{bio}= ', mxltext3,' cm']);    
+    % was hleg=legend('z_{bio}= 0 cm','z_{bio}= 5 cm','z_{bio}= 7 cm','z_{bio}= 9 cm');
 end
 set(gca,'XGrid','On','YGrid','On', 'YLim',[0, 0.2],'YTick',[0.0 0.05 0.1 0.15 0.2])
 set(hleg,'FontSize',8);
@@ -124,7 +131,7 @@ xlabel('Core depth (cm) ');
 ylabel('Normalized ash concentration');
 text(0.04, 0.90, txt, 'FontSize', 14, 'Units', 'normalized');
 hold off
-printfilename = ['3zbio_',expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps'];
+printfilename = ['3zbio_',expname,'_',abutxt,'abu_',numbtxt,'carriers_',expstxt,'Exps_',num2str(TM),'TM'];
 
 % check if output directory exists -- if not create it:
 if ~(exist('output/mat','dir') == 7), mkdir('output/mat'); end
