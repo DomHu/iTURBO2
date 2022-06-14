@@ -24,20 +24,27 @@ if(Observation ==1 )     % 0.5 cm kyr-1 rate
     mxl1   = data(:,2).*11;
     mxl2 = data(:,2).*13;
     mxl3 = data(:,2).*15;
-    Change_rel_depth = 43;  % to align max ash concentration observed with simulated using intermediate zbio
+    Change_rel_depth = 53;  % to align max ash concentration observed with simulated using intermediate zbio
     txt = '0.5 cm kyr^{-1}';
     if(TM == true)
-        Change_rel_depth = 28;  % to align max ash concentration observed with simulated using intermediate zbio
+        Change_rel_depth = 38;  % to align max ash concentration observed with simulated using intermediate zbio
     end
+    
+    % load ash observations vs relative depth:
+    data_01=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','P30:Q43');
+    data_02=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','S30:T43');
+
 else                    % 2.0 - 2.5 cm kyr-1 rate
     mxl1   = data(:,2).*5;
     mxl2 = data(:,2).*7;
     mxl3 = data(:,2).*9;
-    Change_rel_depth = 37;  % to align max ash concentration observed with simulated using intermediate zbio
+    Change_rel_depth = 47;  % to align max ash concentration observed with simulated using intermediate zbio
     txt = '2.0 - 2.5 cm kyr^{-1}';
     if(TM == true)
-        Change_rel_depth = 31;  % to align max ash concentration observed with simulated using intermediate zbio
+        Change_rel_depth = 40;  % to align max ash concentration observed with simulated using intermediate zbio
     end    
+    data_01=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','V30:W45');
+    data_02=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','Y30:Z47');
 end
 
 numb  = nocarriers;     % number of carriers to be measured
@@ -79,14 +86,11 @@ expstxt = num2str(exps,2);
 abutxt = num2str(max(abu),2);
 
 
+rel_depth = (1:lngth)-Change_rel_depth;
+
+
 %%  Plot normalized abundance only and just for species 1 (no isotope change here)
 set(0,'DefaultAxesFontSize',16)
-
-% load ash observations vs relative depth:
-data_V29_39=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','P30:Q43');
-data_V29_40=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','S30:T43');
-data_RC17_126=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','V30:W45');
-data_E48_23=xlsread('data/iTURBO2_input_ash_experiment.xlsx','ash_data','Y30:Z47');
 
 figure
 hold on
@@ -98,31 +102,56 @@ for i = 1:exps
     % mxl3
     mean_bioabu1_mxl3 = mean_bioabu1_mxl3+bioabu3_norm(i,:,1);
 end
+mean_bioabu1_mxl1 = mean_bioabu1_mxl1/exps;
+mean_bioabu1_mxl2 = mean_bioabu1_mxl2/exps;
+mean_bioabu1_mxl3 = mean_bioabu1_mxl3/exps;
+
+
+%% calculate residual sum of squares
+% save relative bioturbated-abundance of respective depths in the
+% observations in columns 3, 4, 5
+for i=1:size(data_01,1)
+    index = find(rel_depth==data_01(i,1));
+    if(isempty(index)) % depth not in our bioturbated core --> abu = 0
+        data_01(i,3) = 0;
+        data_01(i,4) = 0;
+        data_01(i,5) = 0;
+    else
+    data_01(i,3) = mean_bioabu1_mxl1(index);
+    data_01(i,4) = mean_bioabu1_mxl2(index);
+    data_01(i,5) = mean_bioabu1_mxl3(index);
+    end
+end
+
+for i=1:size(data_02,1)
+    index = find(rel_depth==data_02(i,1));
+    if(isempty(index)) % depth not in our bioturbated core --> abu = 0
+        data_02(i,3) = 0;
+        data_02(i,4) = 0;
+        data_02(i,5) = 0;
+    else
+    data_02(i,3) = mean_bioabu1_mxl1(index);
+    data_02(i,4) = mean_bioabu1_mxl2(index);
+    data_02(i,5) = mean_bioabu1_mxl3(index);
+    end
+end
+
 
 % plot relative depths:
-rel_depth = (1:lngth)-Change_rel_depth;
 plot(rel_depth,oriabu(1,:,1)./nocarriers,'--k','Linewidth',2.0) % plot one of the original abu
 
 % mxl1
-mean_bioabu1_mxl1 = mean_bioabu1_mxl1/exps;
 plot(rel_depth,mean_bioabu1_mxl1, '-r','Linewidth',2.0)
 % mxl2
-mean_bioabu1_mxl2 = mean_bioabu1_mxl2/exps;
 plot(rel_depth,mean_bioabu1_mxl2, '-g','Linewidth',2.0)
 % mxl3
-mean_bioabu1_mxl3 = mean_bioabu1_mxl3/exps;
 plot(rel_depth,mean_bioabu1_mxl3, '-b','Linewidth',2.0)
+
 % plot observations
-if(Observation == 1 )     % 0.5 cm kyr-1 rate
-    plot(data_V29_39(:,1),data_V29_39(:,2),'ko','MarkerFaceColor','k')
-    plot(data_V29_40(:,1),data_V29_40(:,2),'k^','MarkerFaceColor','k')
-    hleg=legend(['z_{bio}= 0 cm'], ['z_{bio}= ' , mxltext, ' cm'],['z_{bio}= ' , mxltext2,' cm'],['z_{bio}= ', mxltext3,' cm']);
-else % 2 - 2..5cm kyr-1
-    plot(data_RC17_126(:,1),data_RC17_126(:,2),'ko','MarkerFaceColor','k')
-    plot(data_E48_23(:,1),data_E48_23(:,2),'k^','MarkerFaceColor','k')
-    hleg=legend(['z_{bio}= 0 cm'], ['z_{bio}= ' , mxltext, ' cm'],['z_{bio}= ' , mxltext2,' cm'],['z_{bio}= ', mxltext3,' cm']);    
-    % was hleg=legend('z_{bio}= 0 cm','z_{bio}= 5 cm','z_{bio}= 7 cm','z_{bio}= 9 cm');
-end
+plot(data_01(:,1),data_01(:,2),'ko','MarkerFaceColor','k')
+plot(data_02(:,1),data_02(:,2),'k^','MarkerFaceColor','k')
+hleg=legend(['z_{bio}= 0 cm'], ['z_{bio}= ' , mxltext, ' cm'],['z_{bio}= ' , mxltext2,' cm'],['z_{bio}= ', mxltext3,' cm']);
+
 set(gca,'XGrid','On','YGrid','On', 'YLim',[0, 0.2],'YTick',[0.0 0.05 0.1 0.15 0.2])
 set(hleg,'FontSize',8);
 set(hleg,'Location','NorthEast');

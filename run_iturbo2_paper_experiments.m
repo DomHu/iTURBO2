@@ -5,6 +5,9 @@ function run_iturbo2_paper_experiments(datafile, test_run)
 % datafile  :   INPUT FILE WITH REQUIRED DATA
 % test_run  :   true = fewer simulations -> to run faster
 %               false = run as for paper
+%
+% Example call: run_iturbo2_paper_experiments('data/iTURBO2_input_data.xlsx', false)
+%
 %   1) The six idealized shapes
 %   2) Artificial sinusoidal isotopic change with 20, 40, and 100 kyr periode
 %   3) Observed ash profiles
@@ -61,7 +64,7 @@ else
     disp([' ']);
 end
 
-
+if false
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -157,7 +160,7 @@ close all
 settings.plot_iso_spec1 = false;              % plot isotopes for species 1 only
 
 disp(['>>> Done with "Artificial sinusoidal isotopic change" ...']);
-
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -176,11 +179,11 @@ datafile2 = 'data/iTURBO2_input_ash_experiment.xlsx';
 
 if test_run
     carriers = 100;     	% to be measured    [10000]
-    Exps = 100;             % Experiments to run; each one and the mean is plotted  [100]
+    Exps = 200;             % Experiments to run; each one and the mean is plotted  [100]
     datafile2 = 'data/test_run/iTURBO2_input_ash_experiment_test_run.xlsx';
 end
 
-data=xlsread(datafile2,'ash_data','C4:F63');
+data=xlsread(datafile2,'ash_data','C4:F73');
 
 TM = [false, true];     % simulate homogeneous mixing and using a transition matrix
 
@@ -188,14 +191,15 @@ for i=1:length(TM)
 
     Observation = 1;
     iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_0.5cmkyr', TM(i), Observation)
-    close all
+%    close all
     Observation = 2;
     iturbo2script_3zbio_ASH(data, carriers, Exps, 'Ash_experiment_2.0cmkyr', TM(i), Observation)
-    close all
+%    close all
 end
 
 disp(['>>> Done with "Observed ash profiles" ...']);
 
+if false
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -366,3 +370,4 @@ disp(['   The .eps files are saved in the directory "output" ']);
 disp(['------------------------------------------------------------']);
 disp([' ']);
 
+end

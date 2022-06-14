@@ -8,8 +8,8 @@ function run_iturbo2_exps_PETM690(datafile , outfilename, load_plot_existing_res
 % carriers: how many forams shall be picked and measured
 %           Note: existing results only for carriers - 4 and 12!
 %
-% Example call  run_iturbo2_exps_PETM690('data/3_turbo2input_PETM_690_Exp.xlsx' , 'PETM_results', true)
-%               run_iturbo2_exps_PETM690('data/3_turbo2input_PETM_690_Exp.xlsx' , 'PETM_results', false)
+% Example call  run_iturbo2_exps_PETM690('data/iTURBO2_input_PETM_690_Exp.xlsx' , 'PETM_results', true, 4)
+%               run_iturbo2_exps_PETM690('data/iTURBO2_input_PETM_690_Exp.xlsx' , 'PETM_results', false, 4)
 
 % add path to PETM 690 code changes
 addpath('./PETM690_code');
