@@ -54,6 +54,7 @@ run_iturbo2_simple_experiments.m		- MATLAB script to run simple iTURBO2 experime
 iturbo2_plus_TM.m       		  	- MATLAB code of iTURBO2, now including the transition matrix (TM) approach
 iturbo2script_multipleSims.m		  	- MATLAB script to run iTURBO2 using multiple simulations (i.e. with different random mixing realisations) for one biotrbation depths
 iturbo2script_multipleSims_3zbio.m 	  	- MATLAB script to run iTURBO2 using multiple simulations for three different biotrbation depths
+iturbo2script_4zbio_ASH.m			- MATLAB script to run iTURBO2 to simulate the observed ash layers using four different biotrbation depths
 iturbo2script_3zbio_ASH.m			- MATLAB script to run iTURBO2 to simulate the observed ash layers using three different biotrbation depths
 iturbo2script_multipleSims_dissolution.m	- MATLAB script to run iTURBO2 using multiple simulations for three different dissolution scenarios
 
